@@ -1,0 +1,15 @@
+{
+  "name": "perfpony",
+  "version": "1.0.0",
+  "description": "Automated website performance reports",
+  "main": "perfpony.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kaspars Dambis (https://kaspars.net)",
+  "license": "MIT",
+  "dependencies": {
+    "lighthouse": "^2.4.0",
+    "csv": "^1.1.1"
+  }
+}
