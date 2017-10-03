@@ -40,29 +40,10 @@ function lighthouseResultToReport( results ) {
 	return report;
 }
 
-function getReportId() {
-	var d = new Date();
-	var parts = [
-		d.getFullYear(),
-		d.getMonth() + 1,
-		d.getDate(),
-		'-',
-		d.getHours(),
-		d.getMinutes(),
-		d.getSeconds()
-	];
-
-	return parts.join('');
-}
-
 function runLighthouse( urls, flags, reports = [] ) {
 	var url = urls.shift();
 
-	console.log( 'Report started: ' + url );
-
 	return lighthouse( url, flags ).then( result => {
-		console.log( 'Report completed: ' + url );
-
 		reports.push( lighthouseResultToReport( result ) );
 
 		if ( urls.length ) {
@@ -90,20 +71,12 @@ fs.readFile( urlCsv, ( err, data ) => {
 
 		chromeLauncher.launch( chromeFlags ).then( chrome => {
 			var urls = csv.map( entry => entry[0] );
-			var reportFilename = [ 'reports/report-', getReportId(), '.csv' ].join('');
 
 			runLighthouse( urls, { port: chrome.port } ).then( ( reports ) => {
 				var csv = reportToCsv( reports );
 
 				csvStringify( csv, function( error, output ) {
-					fs.writeFile( reportFilename, output, ( err ) => {
-						if ( err ) {
-							throw err;
-						}
-
-						console.log( 'Report Completed!' );
-						console.log( output );
-					} );
+					process.stdout.write( output );
 				} );
 
 				chrome.kill();
