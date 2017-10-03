@@ -16,4 +16,6 @@ Run performance reports for multiple URLs using  [Lighthouse](https://github.com
 
 ## Usage
 
-TODO
+	$ node perfpony path/to/urls.csv
+
+where `path/to/urls.csv` is a path to a file with URLs to check (one per line or CSV).
